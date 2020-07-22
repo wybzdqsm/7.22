@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<style>
+	.window{
+		width:100%;
+		height:900px;
+		background:url(beijing.png) no-repeat center 0 ;
+		background-size:cover;
+	}
+
+	.start{
+		font-size: 60px;
+		width:250px;
+		height:100px;
+		margin:auto auto;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-top:400px;
+		margin-left:900px;
+		position: absolute;
+		cursor: pointer;
+	}
+	.difficult1{
+		width:100px;
+		height:30px;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:100px;
+		display: none;
+		top:300px;
+		position: absolute;
+		cursor: pointer;
+		/* color:blue; */
+		font-weight: bold;
+		font-size: 25px;
+		
+		
+	}
+	.difficult2{
+		width:100px;
+		height:30px;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:100px;
+		display: none;
+		top:400px;
+		position: absolute;
+		cursor: pointer;
+		/* color:yellow; */
+		font-size: 25px;
+	}
+	.difficult3{
+		width:100px;
+		height:30px;
+		color: red;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:100px;
+		display: none;
+		top:500px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 25px;
+	}
+	.jifen{
+		width:100px;
+		height:80px;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:100px;
+		display: none;
+		top:600px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+	}
+	.tongguan{
+		width:300px;
+		height:80px;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:780px;
+		display: none;
+		top:380px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 40px;
+	}
+	.die{
+		width:150px;
+		height:80px;
+
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:250px;
+		display: none;
+		top:600px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 30px;
+	}
+	.exit{
+		width:100px;
+		height:30px;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:100px;
+		display: none;
+		top:750px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 40px;
+		
+	}
+</style>
+<body>
+  <div class="window">
+	<div class="start">点击此处开始游戏</div>
+	  <div class="difficult1">点击难度升至2级</div>
+	  <div class="difficult2">点击难度升至3级</div>
+	  <div class="difficult3">开启地狱模式</div>
+	  <div class="jifen">积分</div>
+	  <div class="die">生命值</div>
+	  <div class="tongguan">恭喜你已通关<br>点击重新开始</div>
+	  <div class="exit">退出</div>
+	</div>
+	<script>
+
+		var difficult1=document.querySelector(".difficult1")
+		var difficult2=document.querySelector(".difficult2")
+		var difficult3=document.querySelector(".difficult3")
+		var jifen=document.querySelector(".jifen")
+		var start =document.querySelector(".start")
+		var tongguan=document.querySelector(".tongguan")
+		var die=document.querySelector(".die")
+		var exit=document.querySelector(".exit")
+		var color=["red","blue","yellow","green","black","white","orange","purple"]
+		var letters=["A","B","C","D","E","F","G"];
+		var divs=[];
+	function create(num){
+		var current=[];
+		for(var i=0;i<num;i++){
+		
+			current.push(letters[Math.floor(letters.length*Math.random())]);
+		
+		}
+		for(i=0;i<current.length;i++){
+		 var div1=document.createElement("div")
+		 div1.innerHTML=current[i];
+		 document.body.appendChild(div1)
+		 div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:100px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";"
+        divs.push(div1);
+
+		}
+	}
+
+	 
+	var speed=5;
+	function move(){
+      for(var i=0;i<divs.length;i++){
+	  
+		divs[i].style.top=divs[i].offsetTop+speed+"px";
+		}
+
+		for(let i=0;i<divs.length;i++){
+        if(divs[i].offsetTop>860){
+			
+		document.body.removeChild(divs[i])
+		divs.splice(i,1);
+		create(1);
+		 }
+	}  
+	
+	}
+	
+	
+	var t=setInterval(move,50)
+
+
+
+
+			 var score=0;
+			 var smnum=100;
+			 die.innerHTML="生命值："+smnum
+		document.onkeydown=function(ev){
+			var letter=String.fromCharCode(ev.keyCode)
+			for(var i=0;i<divs.length;i++){
+				if(divs[i].innerHTML==letter){
+					score+=5
+					jifen.innerHTML="积分："+score;
+				  if(score==60){
+					  tongguan.style.display="block"
+					  clearInterval(t);
+					  tongguan.onclick=function(){
+						  score=0;
+						  t=setInterval(move,50)
+						  tongguan.style.display="none"
+					  }
+					  
+				  }
+					document.body.removeChild(divs[i])
+					divs.splice(i,1);
+					create(1);
+					
+					break;
+				}   
+				
+				}
+			}  
+			
+		
+		
+
+		difficult1.onclick=function(){
+			speed=10;
+	}
+	   difficult2.onclick=function(){
+		t=setInterval(move,50)
+		    score=0;
+			speed=10;
+			create(2);
+	   }
+	   difficult3.onclick=function(){
+		 t=setInterval(move,50)
+		     score=0;
+			speed=10;
+		
+			create(5);
+	}
+         start.onclick=function(){
+			create(3);
+			start.style.display="none"
+			difficult1.style.display="block"
+			difficult2.style.display="block"
+			difficult3.style.display="block"
+			jifen.style.display="block"
+			die.style.display="block"
+			exit.style.display="block"
+		 }
+
+
+		 exit.onclick=function(){
+			start.style.display="block"
+			difficult1.style.display="none"
+			difficult2.style.display="none"
+			difficult3.style.display="none"
+			jifen.style.display="none"
+			tongguan.style.display="none"
+			exit.style.display="none"
+			die.style.display="none"
+			divs=[];
+			divs.innerHTML=null
+
+		 }
+		
+	</script>
+</body>
+</html>
