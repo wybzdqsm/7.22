@@ -96,11 +96,11 @@
 		position: absolute;
 		cursor: pointer;
 		font-size: 40px;
+		color:green;
 	}
 	.die{
-		width:150px;
+		width:170px;
 		height:80px;
-
 		text-align: center;
 		padding-top:40px;
 		font-weight: bold;
@@ -124,6 +124,21 @@
 		cursor: pointer;
 		font-size: 40px;
 		
+		
+	}
+	.shibai{
+		width:400px;
+		height:80px;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-left:780px;
+		display: none;
+		top:370px;
+		position: absolute;
+		cursor: pointer;
+		font-size: 60px;
+		color:red;
 	}
 </style>
 <body>
@@ -131,10 +146,12 @@
 	<div class="start">点击此处开始游戏</div>
 	  <div class="difficult1">点击难度升至2级</div>
 	  <div class="difficult2">点击难度升至3级</div>
-	  <div class="difficult3">开启地狱模式</div>
+	  <div class="difficult3">开启困难模式</div>
 	  <div class="jifen">积分</div>
 	  <div class="die">生命值</div>
 	  <div class="tongguan">恭喜你已通关<br>点击重新开始</div>
+	  <div class="shibai">挑战失败<br>
+	    点击重新挑战</div>
 	  <div class="exit">退出</div>
 	</div>
 	<script>
@@ -146,8 +163,10 @@
 		var start =document.querySelector(".start")
 		var tongguan=document.querySelector(".tongguan")
 		var die=document.querySelector(".die")
+		var shibai=document.querySelector(".shibai")
 		var exit=document.querySelector(".exit")
-		var color=["red","blue","yellow","green","black","white","orange","purple"]
+		var color=["red","blue","yellow","green","black","white","orange","purple","#9f76fe","#dfb6f4","#fbf1fb","#fd2596","#d5fdd5","#f1fdd5","#fdd5d5","fdd5f6"]
+		
 		var letters=["A","B","C","D","E","F","G"];
 		var divs=[];
 	function create(num){
@@ -159,16 +178,25 @@
 		}
 		for(i=0;i<current.length;i++){
 		 var div1=document.createElement("div")
+		 div1.className="zimu"
 		 div1.innerHTML=current[i];
 		 document.body.appendChild(div1)
-		 div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:100px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";"
-        divs.push(div1);
+		 div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:150px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";font-weight: bold;text-shadow: 5px -5px black, 4px -4px "+color[Math.floor(color.length*Math.random())]+"; "
+
+
+
+
+		divs.push(div1);
+		// div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:100px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";"
+        // divs.push(div1);
 
 		}
 	}
-
-	 
+	jifen.innerHTML="积分：0"
+    die.innerHTML="生命值 :100" 
 	var speed=5;
+	var smnum=100;
+	
 	function move(){
       for(var i=0;i<divs.length;i++){
 	  
@@ -177,24 +205,34 @@
 
 		for(let i=0;i<divs.length;i++){
         if(divs[i].offsetTop>860){
-			
 		document.body.removeChild(divs[i])
 		divs.splice(i,1);
+		smnum-=5;
+		die.innerHTML="生命值："+smnum;
+		if(smnum==0){
+			score=0;
+			jifen.innerHTML="积分："+score
+			  shibai.style.display="block"
+			var zimus=document.querySelectorAll(".zimu")
+			for(i=0;i<zimus.length;i++){
+				zimus[i].style.display="none"
+				
+			}
+			clearInterval(t)
+		  }
 		create(1);
+	    
 		 }
-	}  
-	
+	}  	
 	}
-	
-	
+
 	var t=setInterval(move,50)
+	
+	
+	    
 
 
-
-
-			 var score=0;
-			 var smnum=100;
-			 die.innerHTML="生命值："+smnum
+                 	var score=0;
 		document.onkeydown=function(ev){
 			var letter=String.fromCharCode(ev.keyCode)
 			for(var i=0;i<divs.length;i++){
@@ -204,44 +242,77 @@
 				  if(score==60){
 					  tongguan.style.display="block"
 					  clearInterval(t);
-					  tongguan.onclick=function(){
+					  var zimus=document.querySelectorAll(".zimu")
+			            for(i=0;i<zimus.length;i++){
+				           zimus[i].style.display="none"
+			              }
+					  tongguan.onclick=function(){ 
+						var zimus=document.querySelectorAll(".zimu")
+			            for(i=0;i<zimus.length;i++){
+				           zimus[i].style.display="block"
+			              }
 						  score=0;
+						  sunum=100;
+						 jifen.innerHTML="积分：0"
+						  die.innerHTML="生命值：100"	
 						  t=setInterval(move,50)
-						  tongguan.style.display="none"
-					  }
-					  
-				  }
-					document.body.removeChild(divs[i])
-					divs.splice(i,1);
-					create(1);
+						  tongguan.style.display="none";
+
+					  } 
 					
+					  
+				  }   document.body.removeChild(divs[i])
+					divs.splice(i,1);
+	          		create(1);			
 					break;
+
+					
 				}   
 				
 				}
 			}  
 			
-		
+			
 		
 
 		difficult1.onclick=function(){
 			speed=10;
+			create(3);
+			var t=setInterval(move,50)
+			score=0;
+			smnum=100;
+			jifen.innerHTML="积分：0"
+			die.innerHTML="生命值：100"
+			tongguan.style.display="none"
+			shibai.style.display="none"
+			
 	}
 	   difficult2.onclick=function(){
+		      speed=10;
+			create(4);
 		t=setInterval(move,50)
-		    score=0;
-			speed=10;
-			create(2);
+		     score=0;
+			smnum=100;
+			jifen.innerHTML="积分：0"
+			die.innerHTML="生命值：100"
+			tongguan.style.display="none"
+			shibai.style.display="none"
 	   }
 	   difficult3.onclick=function(){
+		speed=15;
+			create(6);
 		 t=setInterval(move,50)
-		     score=0;
-			speed=10;
-		
-			create(5);
+		    score=0;
+			smnum=100;
+			jifen.innerHTML="积分：0"
+			die.innerHTML="生命值：100"
+			
+			tongguan.style.display="none"
+			shibai.style.display="none"
 	}
-         start.onclick=function(){
+	start.onclick=function(){
 			create(3);
+			speed=5;
 			start.style.display="none"
 			difficult1.style.display="block"
 			difficult2.style.display="block"
@@ -249,10 +320,15 @@
 			jifen.style.display="block"
 			die.style.display="block"
 			exit.style.display="block"
+			        
 		 }
 
-
+	
 		 exit.onclick=function(){
+			var zimus=document.querySelectorAll(".zimu")
+			for(i=0;i<zimus.length;i++){
+				zimus[i].style.display="none"
+			}
 			start.style.display="block"
 			difficult1.style.display="none"
 			difficult2.style.display="none"
@@ -261,10 +337,24 @@
 			tongguan.style.display="none"
 			exit.style.display="none"
 			die.style.display="none"
-			divs=[];
-			divs.innerHTML=null
+			shibai.style.display="none"
+			smnum=100;
+			 die.innerHTML="生命值:100"
+			 score=0;
+			 jifen.innerHTML="积分:0"
 
+					
 		 }
+		 shibai.onclick=function(){	
+		
+           shibai.style.display="none"
+			 smnum=100;
+			 die.innerHTML="生命值:100"
+			 t=setInterval(move,50)
+		 }
+	
+
+
 		
 	</script>
 </body>
