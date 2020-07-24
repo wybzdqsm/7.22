@@ -314,7 +314,6 @@
 	
 	    
 
-
                  	var score=0;
 		document.onkeydown=function(ev){
 			var letter=String.fromCharCode(ev.keyCode)
@@ -366,7 +365,6 @@
 		difficult1.onclick=function(){
 			speed=10;
 			create(3);
-			// var t=setInterval(move,50)
 			score=0;
 			smnum=100;
 			jifen.innerHTML="积分：0"
@@ -374,17 +372,19 @@
 			tongguan.style.display="none"
 			shibai.style.display="none"
 			stop1.onclick=function(){
-	   clearInterval(t);
-	   stop1.style.display="none";
-	   jixu.style.display="block"
+			clearInterval(t);
+	       stop1.style.display="none";
+	        jixu.style.display="block"
    }
+   difficult1.addEventListener("click",function(){
+	       var t=setInterval(move,50)
+   },false)
    
 			
 	}
 	   difficult2.onclick=function(){
 		      speed=10;
 			create(4);
-		// t=setInterval(move,50)
 		     score=0;
 			smnum=100;
 			jifen.innerHTML="积分：0"
@@ -392,16 +392,23 @@
 			tongguan.style.display="none"
 			shibai.style.display="none"
 			stop1.onclick=function(){
-	       clearInterval(t);
+		   clearInterval(t);
+		   
 	       stop1.style.display="none";
 	       jixu.style.display="block"
    }
 	
 	   }
+
+	   difficult2.addEventListener("click",function(){
+	       var t=setInterval(move,50)
+   },false)
+
+
+
 	   difficult3.onclick=function(){
 		   speed=15;
 			create(6);
-		//  t=setInterval(move,50)
 		    score=0;
 			smnum=100;
 			jifen.innerHTML="积分：0"
@@ -409,12 +416,17 @@
 			tongguan.style.display="none"
 			shibai.style.display="none"
 		stop1.onclick=function(){
-		   clearInterval(t);
+		   clearInterval(t);   
 	   stop1.style.display="none";
 	   jixu.style.display="block"
    }
 	
 	}
+
+
+	difficult3.addEventListener("click",function(){
+	       var t=setInterval(move,50)
+   },false)
 
 	start.onclick=function(){
 		     speed=5;
@@ -428,9 +440,7 @@
 			exit.style.display="block"
 			bird.style.display="none"
 			bird2.style.display="none"
-			stop1.style.display="block"
-
-			        
+			stop1.style.display="block"		        
 		 }
 
 
@@ -462,12 +472,13 @@
 			jixu.style.display="none"
 			stop1.style.display="block"
 		 }
+
+
 		 shibai.onclick=function(){	
-		
+		    create(3);
            shibai.style.display="none"
 			 smnum=100;
 			 die.innerHTML="生命值:100"
-			 create(3)
 			 t=setInterval(move,50)
 		 }
 		 
