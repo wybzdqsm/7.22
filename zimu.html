@@ -9,8 +9,9 @@
 	.window{
 		width:100%;
 		height:900px;
-		background:url(beijing.png) no-repeat center 0 ;
+		background:url(img/beijing.png) no-repeat center 0 ;
 		background-size:cover;
+		overflow: hidden;
 	}
 
 	.start{
@@ -60,7 +61,7 @@
 	.difficult3{
 		width:100px;
 		height:30px;
-		color: red;
+		color:red;
 		text-align: center;
 		padding-top:40px;
 		font-weight: bold;
@@ -138,24 +139,107 @@
 		position: absolute;
 		cursor: pointer;
 		font-size: 60px;
-		color:red;
+		color:#000;
+		
 	}
+	.bird{
+		position: absolute;
+		top:50px;
+		left:10px;
+		animation-duration: 5s;
+		animation-name:offset1;
+        animation-duration:2s;
+		animation-timing-function:linear;
+        animation-fill-mode: forwards;
+		opacity: 0.3;
+	}
+
+	@keyframes offset1{
+        from{
+            transform: translateX(0px);
+        }
+        to{
+            transform: translateX(1500px);
+        }
+    }
+	.bird2{
+		position: absolute;
+		top:720px;
+		left:400px;
+		animation-duration: 5s;
+		animation-name:move;
+        animation-duration:4s;
+		animation-timing-function:linear;
+		animation-direction: alternate;
+		opacity: 0.3;
+	}
+	@keyframes move{
+
+0%{
+	transform: translateY(0);
+}
+50%{
+   transform: translateY(-720px);
+}
+100%{
+   transform: translateY(0);
+  }
+
+
+}
+.stopi{
+	animation-name:rotate;
+        animation-duration: 3s;
+        animation-timing-function:linear;
+        animation-iteration-count:infinite;
+        /* animation-direction: alternate; */
+}
+@keyframes rotate{
+        from{
+          transform: rotate(0);  
+        }
+        to{
+            transform: rotate(360deg);  
+        }
+     }
+.jixu{
+	font-size: 60px;
+		width:250px;
+		height:100px;
+		margin:auto auto;
+		text-align: center;
+		padding-top:40px;
+		font-weight: bold;
+		margin-top:400px;
+		margin-left:900px;
+		position: absolute;
+		cursor: pointer;
+		display: none;
+}
+
 </style>
 <body>
   <div class="window">
+	  <div class="bird"><img src="img/bird4.png" alt="" ></div>
+	  <div class="bird2"><img src="img/bird4.png" alt="" ></div>
 	<div class="start">点击此处开始游戏</div>
 	  <div class="difficult1">点击难度升至2级</div>
 	  <div class="difficult2">点击难度升至3级</div>
 	  <div class="difficult3">开启困难模式</div>
 	  <div class="jifen">积分</div>
 	  <div class="die">生命值</div>
-	  <div class="tongguan">恭喜你已通关<br>点击重新开始</div>
-	  <div class="shibai">挑战失败<br>
+	  <div class="jixu"><img src="img/stop.png" alt=""></div>
+	  <div class="tongguan">恭喜你已通关<img src="img/guzhang.png" alt="" style="position: absolute;left:270px;top:40px;width:100px;height:100px;">
+		  <br>点击重新开始
+	     </div>
+	  <div class="shibai">挑战失败<img src="img/shibai.png" alt="" style="position: absolute;left:100px;top:10px;width:230px;height:230px;opacity: 0.8;"><br>
 	    点击重新挑战</div>
 	  <div class="exit">退出</div>
+	  <div class="stop" style="display:none"><img class="stopi" src="img/stop.png" alt="" style="width:100px;height:100px;position:absolute ;right:80px;top:100px"></div>
 	</div>
 	<script>
-
+	   var stop1=document.querySelector(".stop")
+	   var jixu=document.querySelector(".jixu")
 		var difficult1=document.querySelector(".difficult1")
 		var difficult2=document.querySelector(".difficult2")
 		var difficult3=document.querySelector(".difficult3")
@@ -165,7 +249,9 @@
 		var die=document.querySelector(".die")
 		var shibai=document.querySelector(".shibai")
 		var exit=document.querySelector(".exit")
-		var color=["red","blue","yellow","green","black","white","orange","purple","#9f76fe","#dfb6f4","#fbf1fb","#fd2596","#d5fdd5","#f1fdd5","#fdd5d5","fdd5f6"]
+		var bird=document.querySelector(".bird")
+		var bird2=document.querySelector(".bird2")
+		var color=["blue","yellow","green","black","white","orange","purple","#9f76fe","#dfb6f4","#fbf1fb","#fd2596","#d5fdd5","#f1fdd5","#fdd5d5","fdd5f6","#f8c7ca","#956da8","#514569","#00bcd4","#92c760"]
 		
 		var letters=["A","B","C","D","E","F","G"];
 		var divs=[];
@@ -181,10 +267,7 @@
 		 div1.className="zimu"
 		 div1.innerHTML=current[i];
 		 document.body.appendChild(div1)
-		 div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:150px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";font-weight: bold;text-shadow: 5px -5px black, 4px -4px "+color[Math.floor(color.length*Math.random())]+"; "
-
-
-
+		 div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:100px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";font-weight: bold;background:url(img/bird.png) no-repeat;width:200px;height:200px;text-align:center; vertical-align: middle;padding-top:35px;opacity:0.6;font-style:italic;font-family:Times New Roman, Times, serif;"
 
 		divs.push(div1);
 		// div1.style.cssText="position:absolute;left:"+document.documentElement.clientWidth*Math.random()+"px;top:"+(40*Math.random())+"px;font-size:100px;position:fixed;color:"+color[Math.floor(color.length*Math.random())]+";"
@@ -254,7 +337,7 @@
 						  score=0;
 						  sunum=100;
 						 jifen.innerHTML="积分：0"
-						  die.innerHTML="生命值：100"	
+						  die.innerHTML="生命值：100"
 						  t=setInterval(move,50)
 						  tongguan.style.display="none";
 
@@ -272,47 +355,70 @@
 				}
 			}  
 			
-			
+			stop1.onclick=function(){
+	    clearInterval(t);
+	   stop1.style.display="none";
+	   jixu.style.display="block"
+   }
+
 		
 
 		difficult1.onclick=function(){
 			speed=10;
 			create(3);
-			var t=setInterval(move,50)
+			// var t=setInterval(move,50)
 			score=0;
 			smnum=100;
 			jifen.innerHTML="积分：0"
 			die.innerHTML="生命值：100"
 			tongguan.style.display="none"
 			shibai.style.display="none"
+			stop1.onclick=function(){
+	   clearInterval(t);
+	   stop1.style.display="none";
+	   jixu.style.display="block"
+   }
+   
 			
 	}
 	   difficult2.onclick=function(){
 		      speed=10;
 			create(4);
-		t=setInterval(move,50)
+		// t=setInterval(move,50)
 		     score=0;
 			smnum=100;
 			jifen.innerHTML="积分：0"
 			die.innerHTML="生命值：100"
 			tongguan.style.display="none"
 			shibai.style.display="none"
+			stop1.onclick=function(){
+	       clearInterval(t);
+	       stop1.style.display="none";
+	       jixu.style.display="block"
+   }
+	
 	   }
 	   difficult3.onclick=function(){
-		speed=15;
+		   speed=15;
 			create(6);
-		 t=setInterval(move,50)
+		//  t=setInterval(move,50)
 		    score=0;
 			smnum=100;
 			jifen.innerHTML="积分：0"
-			die.innerHTML="生命值：100"
-			
+			die.innerHTML="生命值：100"	
 			tongguan.style.display="none"
 			shibai.style.display="none"
+		stop1.onclick=function(){
+		   clearInterval(t);
+	   stop1.style.display="none";
+	   jixu.style.display="block"
+   }
+	
 	}
+
 	start.onclick=function(){
+		     speed=5;
 			create(3);
-			speed=5;
 			start.style.display="none"
 			difficult1.style.display="block"
 			difficult2.style.display="block"
@@ -320,8 +426,13 @@
 			jifen.style.display="block"
 			die.style.display="block"
 			exit.style.display="block"
+			bird.style.display="none"
+			bird2.style.display="none"
+			stop1.style.display="block"
+
 			        
 		 }
+
 
 	
 		 exit.onclick=function(){
@@ -342,16 +453,26 @@
 			 die.innerHTML="生命值:100"
 			 score=0;
 			 jifen.innerHTML="积分:0"
+			 stop1.style.display="none"
 
 					
+		 }
+		 jixu.onclick=function(){
+			t=setInterval(move,50)
+			jixu.style.display="none"
+			stop1.style.display="block"
 		 }
 		 shibai.onclick=function(){	
 		
            shibai.style.display="none"
 			 smnum=100;
 			 die.innerHTML="生命值:100"
+			 create(3)
 			 t=setInterval(move,50)
 		 }
+		 
+		
+		 
 	
 
 
